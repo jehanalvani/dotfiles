@@ -5,13 +5,13 @@ Environment config and dot files that I like to keep consistent between systems.
 
 To initialize a new system or migrate an existing system to this setup:
 
-	curl -Lks https://gist.github.com/jehanalvani/01f5b6fecbaf60649e1b761220a52548 | /bin/zsh
+	curl -Lks https://gist.githubusercontent.com/jehanalvani/01f5b6fecbaf60649e1b761220a52548/raw/47778ad8d72d5cbda343433434ef2122cbecae9a/config_init.sh | /bin/zsh
 
 
 OR
 
 
-	curl -Lks https://gist.github.com/jehanalvani/01f5b6fecbaf60649e1b761220a52548 | /bin/bash
+	curl -Lks https://gist.githubusercontent.com/jehanalvani/01f5b6fecbaf60649e1b761220a52548/raw/47778ad8d72d5cbda343433434ef2122cbecae9a/config_init.sh | /bin/bash
 
 ---
 
