@@ -1,0 +1,57 @@
+#! /bin/zsh
+
+
+usage()
+{ 
+	echo "Usage: imgur-dl-unpack [-d  /path/to/dest/dir/ ] [url of imgur album]"
+} 
+
+exit_abnormal()
+{
+	usage
+	exit 1
+}
+
+
+# Initialize Variables
+DEST_PATH="./"
+
+# Parse args and set variables accordingly
+while getopts "d:" passed_options
+do 
+	case "${passed_options}" in
+	  	d)
+			DEST_PATH="${OPTARG}";;
+	  	:) 
+	  		"Error: -${OPTARG} requires an argument"
+	  		exit_abnormal ;;
+	  	*)
+		   echo "Error!"
+		   exit_abnormal ;;
+	 esac
+done
+shift $OPTIND-1
+
+
+[ ! -d "$DEST_PATH" ] && mkdir -p "$DEST_PATH"
+touch "$DEST_PATH/dontdelete"
+
+
+[[ $0 =~ ^(http(s)?://)?imgur.com/ ]]  && PASSED_URL="$1" || usage
+
+
+
+[[ "$PASSED_URL" =~ (http(s)?://)?imgur.com/gallery/ ]] && DL_URL=${PASSED_URL//gallery/a/} || DL_URL="$PASSED_URL" 
+#[[ "$PASSED_URL" =~ (http(s)?://)?imgur.com/gallery/ ]] && DL_URL=$"(echo $PASSED_URL |  sed 's|gallery|a|g')" || DL_URL="$PASSED_URL"
+
+# echo "\n$DL_URL" 
+# [[ "$DL_URL" =~ "^http(s)?://(.*)(?<!/zip)$" ]] && DL_URL="$DL_URL"/zip || usage
+
+echo "Destination Directory is $DEST_PATH"
+echo "$PASSED_URL" 
+echo "$DL_URL"
+
+mkdir /tmp/imgur_dl/
+wget "$DL_URL/zip" --output-document=output.zip --directory-prefix=/tmp/imgur_dl/
+unzip -q "/tmp/imgur_dl/output.zip" -d "$DEST_PATH"
+rm "$DEST_PATH/dontdelete"
