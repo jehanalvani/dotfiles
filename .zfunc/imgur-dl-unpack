@@ -3,7 +3,9 @@
 
 usage()
 { 
-	echo "Usage: imgur-dl-unpack [-d  /path/to/dest/dir/ ] [url of imgur album]"
+	echo "Usage: imgur-dl-unpack [-d  /path/to/dest/dir/ ] [url of imgur album]
+    options:
+    	-t		Test mode"
 } 
 
 exit_abnormal()
@@ -15,13 +17,16 @@ exit_abnormal()
 
 # Initialize Variables
 DEST_PATH="./"
+TEST_FLAG=0
 
 # Parse args and set variables accordingly
-while getopts "d:" passed_options
+while getopts "d:t" passed_options
 do 
 	case "${passed_options}" in
 	  	d)
 			DEST_PATH="${OPTARG}";;
+		t) 
+			TEST_FLAG=1;;
 	  	:) 
 	  		"Error: -${OPTARG} requires an argument"
 	  		exit_abnormal ;;
@@ -33,25 +38,40 @@ done
 shift $OPTIND-1
 
 
-[ ! -d "$DEST_PATH" ] && mkdir -p "$DEST_PATH"
+# Make destination directory if it doesn't exits
+
+[[ ! -d "$DEST_PATH" ]] && mkdir -p "$DEST_PATH"
 touch "$DEST_PATH/dontdelete"
 
+# Make temp directory if it doesn't exist 
 
-[[ $0 =~ ^(http(s)?://)?imgur.com/ ]]  && PASSED_URL="$1" || usage
+[[ ! -d /tmp/imgur_dl/ ]] && mkdir /tmp/imgur_dl
 
 
+if [[ $1 =~ ^(http(s)?://)?imgur.com/ ]]
+ 	then
+ 	 PASSED_URL="$1" 
+else
+ 	echo "Error: Pass a valid imgur URL"
+ 	exit_abnormal
+fi
 
-[[ "$PASSED_URL" =~ (http(s)?://)?imgur.com/gallery/ ]] && DL_URL=${PASSED_URL//gallery/a/} || DL_URL="$PASSED_URL" 
-#[[ "$PASSED_URL" =~ (http(s)?://)?imgur.com/gallery/ ]] && DL_URL=$"(echo $PASSED_URL |  sed 's|gallery|a|g')" || DL_URL="$PASSED_URL"
 
-# echo "\n$DL_URL" 
-# [[ "$DL_URL" =~ "^http(s)?://(.*)(?<!/zip)$" ]] && DL_URL="$DL_URL"/zip || usage
+[[ "$PASSED_URL" =~ (http(s)?://)?imgur.com/gallery/ ]] && DL_URL=${PASSED_URL/gallery/a} || DL_URL="$PASSED_URL" 
 
-echo "Destination Directory is $DEST_PATH"
-echo "$PASSED_URL" 
-echo "$DL_URL"
 
-mkdir /tmp/imgur_dl/
-wget "$DL_URL/zip" --output-document=output.zip --directory-prefix=/tmp/imgur_dl/
-unzip -q "/tmp/imgur_dl/output.zip" -d "$DEST_PATH"
-rm "$DEST_PATH/dontdelete"
+if [[ TEST_FLAG -eq 1 ]]
+then 
+	echo "Destination Directory: $DEST_PATH"
+	echo "$PASSED_URL" 
+	echo "$DL_URL"
+	echo 
+	echo "wget "$DL_URL/zip" --output-document=/tmp/imgur_dl/output.zip"
+	echo "unzip -q "/tmp/imgur_dl/output.zip" -d "$DEST_PATH""
+	echo "rm "$DEST_PATH/dontdelete""
+else
+	wget "$DL_URL/zip" --output-document=/tmp/imgur_dl/output.zip 
+	echo "Unzipping to $DEST_PATH"
+	unzip -q "/tmp/imgur_dl/output.zip" -d "$DEST_PATH"
+	rm "$DEST_PATH/dontdelete"
+fi
