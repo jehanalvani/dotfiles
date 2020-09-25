@@ -1,0 +1,27 @@
+#! /bin/zsh
+
+echo -n "Configuration file: "
+read config_file
+
+echo -e "Put keyboard in Device Firmware Upfrade (DFU) mode - usually \e[0;1mFN+B\e[0m."
+
+curr_dir=$(pwd)
+
+cd "/Users/$USERNAME/Dropbox/Scripts/Massdrop Keyboard Configurator"
+exec ./mdloader_mac --first --download ./Config/$config_file --restart
+
+
+
+
+# for i in {30..0}
+# do
+#  echo -n "$i"
+#  if  [ $i -gt 0 ]
+#  then
+#  	for fs in {3..1}
+#  	do
+#       sleep .3s 
+#       echo -n "."
+#     done
+#  fi  
+# done
