@@ -11,8 +11,6 @@ cd "/Users/$USERNAME/Dropbox/Scripts/Massdrop Keyboard Configurator"
 exec ./mdloader_mac --first --download ./Config/$config_file --restart
 
 
-
-
 # for i in {30..0}
 # do
 #  echo -n "$i"
