@@ -7,8 +7,11 @@ echo -e "Put keyboard in Device Firmware Upfrade (DFU) mode - usually \e[0;1mFN+
 
 curr_dir=$(pwd)
 
-cd "/Users/$USERNAME/Dropbox/Scripts/Massdrop Keyboard Configurator"
-exec ./mdloader_mac --first --download ./Config/$config_file --restart
+echo "Config file: $config_file"
+echo "Current Directory: $curr_dir" 
+
+# cd "/Users/$USERNAME/Dropbox/Scripts/Massdrop Keyboard Configurator"
+# exec ./mdloader_mac --first --download ./Config/$config_file --restart
 
 
 # for i in {30..0}
