@@ -1,4 +1,9 @@
 #! /bin/zsh
+#
+# Grateful to this thread for the inspo.
+# https://forums.docker.com/t/restart-docker-from-command-line/9420/8
+#
+
 
 echo "Killing Docker engine..."
 killall Docker 
