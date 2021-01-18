@@ -1,0 +1,9 @@
+#! /bin/zsh
+
+echo "Killing Docker engine..."
+killall Docker 
+
+echo "Opening Docker in the background..." 
+open --background -a Docker && while ! docker system info > /dev/null 2>&1; do sleep 1; done
+
+echo "Restarted Docker engine."
