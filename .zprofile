@@ -1,3 +1,5 @@
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+
 # (The below instructions are intended for common
 # shell setups. See the README for more guidance
 # if they don't apply and/or don't work for you.)

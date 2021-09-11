@@ -1,5 +1,5 @@
 export PATH="/usr/local/sbin:$PATH"
-
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 # (The below instructions are intended for common
 # shell setups. See the README for more guidance
