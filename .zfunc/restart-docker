@@ -1,0 +1,14 @@
+#! /bin/zsh
+#
+# Grateful to this thread for the inspo.
+# https://forums.docker.com/t/restart-docker-from-command-line/9420/8
+#
+
+
+echo "Killing Docker engine..."
+killall Docker 
+
+echo "Opening Docker in the background..." 
+open --background -a Docker && while ! docker system info > /dev/null 2>&1; do sleep 1; done
+
+echo "Restarted Docker engine."
