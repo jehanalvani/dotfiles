@@ -1,10 +1,13 @@
-export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/bin:$PYENV_ROOT/bin:$PATH"
+#export PATH="/Users/jehan/Library/Python/3.7/bin:/usr/local/bin:$PYENV_ROOT/bin:$PATH"
+# export PATH="/usr/local/sbin:$PATH"
 
 source $HOME/.aliases
 
 FPATH=$HOME/.zsh_functions:$FPATH
 
 
+eval "$(pyenv init -)"
 
 # Shell functions
 setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh compatibility
@@ -28,3 +31,11 @@ if type brew &>/dev/null; then
   compinit
 fi
 
+export PYENV_ROOT="$HOME/.pyenv"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+eval "$(pyenv virtualenv-init -)"
+
+# Make permanent the required exports for the node-exporter Ansible role to complete.
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
