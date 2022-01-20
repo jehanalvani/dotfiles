@@ -31,6 +31,7 @@ if type brew &>/dev/null; then
   compinit
 fi
 
+<<<<<<< HEAD
 export PYENV_ROOT="$HOME/.pyenv"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
@@ -39,3 +40,25 @@ eval "$(pyenv virtualenv-init -)"
 
 # Make permanent the required exports for the node-exporter Ansible role to complete.
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+=======
+# (The below instructions are intended for common
+# shell setups. See the README for more guidance
+# if they don't apply and/or don't work for you.)
+
+# Add pyenv executable to PATH and
+# enable shims by adding the following
+# to ~/.profile and ~/.zprofile:
+
+#export PYENV_ROOT="$HOME/.pyenv"
+#export PATH="$PYENV_ROOT/bin:$PATH"
+#eval "$(pyenv init --path)"
+
+# Load pyenv into the shell by adding
+# the following to ~/.zshrc:
+
+eval "$(pyenv init -)"
+
+# Make sure to restart your entire logon session
+# for changes to profile files to take effect.
+
+>>>>>>> 91a944d62cd573b5c2c0020ab00c50756850a804
