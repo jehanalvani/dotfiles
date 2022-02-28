@@ -5,10 +5,17 @@ Environment config and dot files that I like to keep consistent between systems.
 
 To initialize a new system or migrate an existing system to this setup:
 
+First alias `config` as needed:
+
+	alias config='/usr/bin/git --git-dir=$HOME/.config/ --work-tree=$HOME'
+
+Then run the following: 
+
+For `zsh`
 	curl -Lks https://gist.githubusercontent.com/jehanalvani/01f5b6fecbaf60649e1b761220a52548/raw/47778ad8d72d5cbda343433434ef2122cbecae9a/config_init.sh | /bin/zsh
 
 
-OR
+OR for `bash`
 
 
 	curl -Lks https://gist.githubusercontent.com/jehanalvani/01f5b6fecbaf60649e1b761220a52548/raw/47778ad8d72d5cbda343433434ef2122cbecae9a/config_init.sh | /bin/bash
