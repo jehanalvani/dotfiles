@@ -31,7 +31,7 @@ if type brew &>/dev/null; then
   compinit
 fi
 
-<<<<<<< HEAD
+
 export PYENV_ROOT="$HOME/.pyenv"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
@@ -61,4 +61,4 @@ eval "$(pyenv init -)"
 # Make sure to restart your entire logon session
 # for changes to profile files to take effect.
 
->>>>>>> 91a944d62cd573b5c2c0020ab00c50756850a804
+
