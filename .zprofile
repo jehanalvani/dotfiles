@@ -20,3 +20,4 @@ eval "$(pyenv init --path)"
 # Make sure to restart your entire logon session
 # for changes to profile files to take effect.
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
