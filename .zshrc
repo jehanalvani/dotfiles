@@ -40,7 +40,6 @@ eval "$(pyenv virtualenv-init -)"
 
 # Make permanent the required exports for the node-exporter Ansible role to complete.
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
-=======
 # (The below instructions are intended for common
 # shell setups. See the README for more guidance
 # if they don't apply and/or don't work for you.)
@@ -62,3 +61,4 @@ eval "$(pyenv init -)"
 # for changes to profile files to take effect.
 
 
+source ~/.config/op/plugins.sh
