@@ -77,7 +77,9 @@ Prior to the installation make sure you have committed the alias to your `.bashr
 
 
 	alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-	And that your source repository ignores the folder where you'll clone it, so that you don't create weird recursion problems:
+	
+ And that your source repository ignores the folder where you'll clone it, so that you don't create weird recursion problems:
+ 
 	echo ".cfg" >> .gitignore
 
 
