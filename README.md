@@ -12,6 +12,7 @@ First alias `config` as needed:
 Then run the following: 
 
 For `zsh`
+
 	curl -Lks https://gist.githubusercontent.com/jehanalvani/01f5b6fecbaf60649e1b761220a52548/raw/47778ad8d72d5cbda343433434ef2122cbecae9a/config_init.sh | /bin/zsh
 
 
