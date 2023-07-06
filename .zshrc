@@ -62,3 +62,4 @@ eval "$(pyenv init -)"
 
 
 source ~/.config/op/plugins.sh
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh) # add autocomplete permanently to your zsh shell
