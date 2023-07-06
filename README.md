@@ -12,6 +12,7 @@ First alias `config` as needed:
 Then run the following: 
 
 For `zsh`
+
 	curl -Lks https://gist.githubusercontent.com/jehanalvani/01f5b6fecbaf60649e1b761220a52548/raw/47778ad8d72d5cbda343433434ef2122cbecae9a/config_init.sh | /bin/zsh
 
 
@@ -76,7 +77,9 @@ Prior to the installation make sure you have committed the alias to your `.bashr
 
 
 	alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-	And that your source repository ignores the folder where you'll clone it, so that you don't create weird recursion problems:
+	
+ And that your source repository ignores the folder where you'll clone it, so that you don't create weird recursion problems:
+ 
 	echo ".cfg" >> .gitignore
 
 
