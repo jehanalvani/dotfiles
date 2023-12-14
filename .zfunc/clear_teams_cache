@@ -1,0 +1,18 @@
+#! /bin/zsh
+#
+# Joel likes me to clear the Teams cache for testing sometimes, so here's how.
+# https://learn.microsoft.com/en-us/microsoftteams/troubleshoot/teams-administration/clear-teams-cache
+# Could enhance to ensure it's appropriate regardless of Teams version, but haven't yet. 
+
+echo "Clearing MS Teams Cache..."
+echo "rm -rf ~/Library/Group Containers/UBF8T346G9.com.microsoft.teams"
+echo "God knows why they names it that"
+echo "rm -rf ~/Library/Containers/com.microsoft.teams2"
+echo "..."
+
+sudo rm -rf '~/Library/Group Containers/UBF8T346G9.com.microsoft.teams'
+sudo rm -rf '~/Library/Containers/com.microsoft.teams2'
+
+echo "Teams cache cleared."
+
+
