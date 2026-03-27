@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      // Add Bash(...) patterns for commands Claude should auto-approve,
+      // e.g. "Bash(git:*)", "Bash(npm:*)", "Bash(kubectl:*)"
+      "WebSearch"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "statusLine": {
+    "type": "command",
+    // Path to statusline-command.sh — update to your $HOME
+    "command": "bash /your/home/.claude/statusline-command.sh"
+  },
+  "effortLevel": "high",
+  "skipDangerousModePermissionPrompt": true
+}

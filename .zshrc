@@ -63,5 +63,6 @@ eval "$(pyenv init -)"
 
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh) # add autocomplete permanently to your zsh shell
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
+
+# Private shell config (work-specific env vars, PATH additions, private tool setup)
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
