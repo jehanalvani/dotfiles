@@ -1,3 +1,4 @@
 
-alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias config='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias config-private='git --git-dir=$HOME/.dotfiles-private/.git/ --work-tree=$HOME/.dotfiles-private'
 alias flushdns='sudo killall -HUP mDNSResponder'
