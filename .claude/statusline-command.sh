@@ -60,10 +60,48 @@ fi
 # Working directory basename
 dir_name=$(echo "$input" | jq -r '.workspace.current_dir // .cwd // empty' | xargs basename 2>/dev/null)
 
-# Assemble
+# Account/org: match cwd against ~/.claude/api-accounts.json dirs
+# Shows workspace if set, falls back to name (e.g. "personal", "work")
+account_str=""
+accounts_file="$HOME/.claude/api-accounts.json"
+if [ -f "$accounts_file" ] && [ -n "$cwd" ]; then
+  account_label=$(jq -r --arg cwd "$cwd" '
+    .accounts[]
+    | select(.dirs[] as $d | $cwd | startswith($d))
+    | if .workspace != "" then .workspace else .name end
+  ' "$accounts_file" 2>/dev/null | head -1)
+  if [ -n "$account_label" ]; then
+    # ── Account colors ───────────────────────────────────────────
+    # Add/edit entries here. Patterns are fnmatch globs (case-insensitive via lowercase).
+    # 256-color reference: 215=light orange  75=steel blue  default=no color
+    case "${account_label,,}" in
+      *macrohealth*)  color=75  ;;   # steel blue
+      personal)       color=215 ;;   # light orange
+      *little*league*)color=215 ;;   # light orange
+      *)              color=""  ;;
+    esac
+    # ─────────────────────────────────────────────────────────────
+    if [ -n "$color" ]; then
+      account_str=$(printf '\033[38;5;%sm%s\033[0m' "$color" "$account_label")
+    else
+      account_str="$account_label"
+    fi
+  fi
+fi
+
+# Session cost
+cost_str=""
+cost_raw=$(echo "$input" | jq -r '.cost.total_cost_usd // empty')
+if [ -n "$cost_raw" ]; then
+  cost_str=$(printf '$%.2f' "$cost_raw")
+fi
+
+# Assemble: model ctx% account ⎇ branch dir $cost
 parts="$model_short"
 [ -n "$ctx_str" ] && parts="$parts $ctx_str"
+[ -n "$account_str" ] && parts="$parts $account_str"
 [ -n "$branch" ] && parts="$parts ⎇ $branch"
 [ -n "$dir_name" ] && parts="$parts $dir_name"
+[ -n "$cost_str" ] && parts="$parts $cost_str"
 
 printf '%s' "$parts"

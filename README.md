@@ -16,7 +16,7 @@ Uses the [bare git repo technique](https://www.atlassian.com/git/tutorials/dotfi
 | `.claude/credential-helper.sh` | Claude Code API key helper (1Password-backed, per-directory) |
 | `.claude/api-accounts.json` | Directory → Anthropic account mapping |
 | `.claude/settings.json` | Claude Code global settings |
-| `.claude/statusline-command.sh` | Claude Code status line script |
+| `.claude/statusline-command.sh` | Claude Code status line — model, context %, account (color-coded by org), git branch, dir, session cost |
 
 ---
 
