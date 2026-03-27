@@ -58,7 +58,8 @@ if [ -n "$cwd" ]; then
 fi
 
 # Working directory basename
-dir_name=$(echo "$input" | jq -r '.workspace.current_dir // .cwd // empty' | xargs basename 2>/dev/null)
+_cwd_raw=$(echo "$input" | jq -r '.workspace.current_dir // .cwd // empty')
+dir_name="${_cwd_raw##*/}"
 
 # Account/org: match cwd against ~/.claude/api-accounts.json dirs
 # Shows workspace if set, falls back to name (e.g. "personal", "work")
