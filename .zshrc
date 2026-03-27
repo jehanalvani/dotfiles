@@ -61,5 +61,7 @@ eval "$(pyenv init -)"
 # for changes to profile files to take effect.
 
 
-source ~/.config/op/plugins.sh
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh) # add autocomplete permanently to your zsh shell
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
