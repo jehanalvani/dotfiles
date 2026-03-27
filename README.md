@@ -4,6 +4,14 @@ Environment config and dotfiles, kept consistent across machines.
 
 ---
 
+## Boy why you doing all this you're doing too much
+
+Well, maybe. But if you work in a technical job and in Unix-based systems, over the years the accumulation of little tips and tricks in your dotfiles becomes so personalized that not having them feels like rock-climbing with one arm tied behind your back. Maybe I can make it up the rock face, but it'd be a hell of a lot easier if I had both arms. When i read of about the [bare git repo technique](https://www.atlassian.com/git/tutorials/dotfiles), it clicked. I could make my personal IP portable. And I've been improving it ever since. 
+
+The goal has always been to minimize the amount of time it takes for me to get started on a new machine, be it personal or otherwise, and to do so securely. In the most recent version, I've added `~/.claude` config with API helpers to allow for folder-based seperation of my various Claude contexts - work and personal. If you don't need all of this, fork it and take what you want. I hope it's useful. 
+
+
+
 ## How it works
 
 Uses the [bare git repo technique](https://www.atlassian.com/git/tutorials/dotfiles): a git repo whose working tree is `$HOME` itself, tracked via a `config` alias. No symlinks, no extra tooling, no install framework — files live where the shell expects them.
@@ -17,7 +25,7 @@ alias config='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 Most dotfiles tutorials end up either fully public (and full of personal details) or fully private (and useless as a reference). This repo solves that with a two-repo overlay pattern:
 
 - **This repo** — generic and shareable. Shell config, tool setup, structural patterns. Safe to clone on any machine or show to anyone.
-- **`dotfiles-private`** (private repo) — personal identity, employer config, private host entries. Layers on top via `.local` includes that each public file sources if present.
+- **`dotfiles-private`** (private repo) — personal identity, employer- or contract-related config, private host entries. Layers on top via `.local` includes that each public file sources if present.
 
 The key design principle: every file in this repo works standalone. The private overlay only adds — it never requires the public files to be aware of what's in it. Clone just this repo and you get a functional environment; clone both and you get the full personal setup.
 
