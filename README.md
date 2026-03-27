@@ -25,8 +25,8 @@ Uses the [bare git repo technique](https://www.atlassian.com/git/tutorials/dotfi
 ### 1. Clone
 
 ```sh
-git clone --bare https://github.com/jehanalvani/dotfiles $HOME/.config
-alias config='/usr/bin/git --git-dir=$HOME/.config/ --work-tree=$HOME'
+git clone --bare https://github.com/jehanalvani/dotfiles $HOME/.dotfiles
+alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 ```
 
 ### 2. Checkout
