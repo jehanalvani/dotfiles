@@ -2,9 +2,29 @@
 
 Environment config and dotfiles, kept consistent across machines.
 
-Uses the [bare git repo technique](https://www.atlassian.com/git/tutorials/dotfiles) — no symlinks, no extra tooling. Files are tracked directly from `$HOME` using a `config` alias.
+---
 
-Personal identity, employer-specific config, and private host entries live in a companion private repo (`dotfiles-private`) that layers on top via `.local` includes.
+## How it works
+
+Uses the [bare git repo technique](https://www.atlassian.com/git/tutorials/dotfiles): a git repo whose working tree is `$HOME` itself, tracked via a `config` alias. No symlinks, no extra tooling, no install framework — files live where the shell expects them.
+
+```sh
+alias config='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+```
+
+## Public / private split
+
+Most dotfiles tutorials end up either fully public (and full of personal details) or fully private (and useless as a reference). This repo solves that with a two-repo overlay pattern:
+
+- **This repo** — generic and shareable. Shell config, tool setup, structural patterns. Safe to clone on any machine or show to anyone.
+- **`dotfiles-private`** (private repo) — personal identity, employer config, private host entries. Layers on top via `.local` includes that each public file sources if present.
+
+The key design principle: every file in this repo works standalone. The private overlay only adds — it never requires the public files to be aware of what's in it. Clone just this repo and you get a functional environment; clone both and you get the full personal setup.
+
+The `.local` pattern is the seam:
+- `.gitconfig` ends with `[include] path = ~/.gitconfig.local` — identity and per-employer `includeIf` blocks live there
+- `.ssh/config` starts with `Include ~/.ssh/config.local` — private hosts, internal IPs, employer SSH aliases
+- `statusline-command.sh` sources `~/.claude/statusline-colors.sh` if present — account color branding lives there
 
 ---
 
@@ -13,22 +33,20 @@ Personal identity, employer-specific config, and private host entries live in a 
 | File | Purpose |
 |------|---------|
 | `.zshrc`, `.zprofile`, `.aliases` | Shell config |
-| `.gitconfig` | Global git config + credential helpers. Identity via `~/.gitconfig.local` (private) |
-| `.ssh/config` | SSH config skeleton. Private hosts via `~/.ssh/config.local` (private) |
+| `.gitconfig` | Global git config + credential helpers. Identity via `~/.gitconfig.local` (private overlay) |
+| `.ssh/config` | SSH config skeleton. Private hosts via `~/.ssh/config.local` (private overlay) |
 | `.claude/credential-helper.sh` | Claude Code API key helper (1Password-backed, per-directory) |
 | `.claude/statusline-command.sh` | Claude Code status line — model, context %, account (color-coded), git branch, dir, session cost |
-
-Account colors are defined in `~/.claude/statusline-colors.sh` (private overlay) — the script works without it, just without color branding.
 
 ---
 
 ## New machine setup
 
-### 1. Clone public dotfiles
+### 1. Clone
 
 ```sh
 git clone --bare https://github.com/jehanalvani/dotfiles $HOME/.dotfiles
-alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias config='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 ```
 
 ### 2. Checkout
@@ -58,7 +76,7 @@ bash ~/.dotfiles-private/install.sh
 
 ```sh
 brew install glab
-gh auth setup-git          # GitHub HTTPS credential helper
+gh auth setup-git    # GitHub HTTPS credential helper
 ```
 
 ### 5. Claude Code API key helper
@@ -73,8 +91,6 @@ Per-project API keys live in `.claude/auth-keys.json` within each project direct
 ```
 
 For directories without a local `auth-keys.json`, the global `~/.claude/api-accounts.json` is used as fallback (provided by the private overlay). An empty `key` falls back to Claude Pro OAuth.
-
-To verify a directory's key resolves correctly:
 
 ```sh
 bash ~/.claude/credential-helper.sh --test
