@@ -4,3 +4,9 @@
 
 [includeIf "gitdir:/Users/jehan/Projects/MacroHealth/"]
   path = ~/.gitconfig-macrohealth
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
