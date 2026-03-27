@@ -1,7 +1,10 @@
 # dotfiles
-Environment config and dot files that I like to keep consistent between systems.
+
+Environment config and dotfiles, kept consistent across machines.
 
 Uses the [bare git repo technique](https://www.atlassian.com/git/tutorials/dotfiles) — no symlinks, no extra tooling. Files are tracked directly from `$HOME` using a `config` alias.
+
+Personal identity, employer-specific config, and private host entries live in a companion private repo (`dotfiles-private`) that layers on top via `.local` includes.
 
 ---
 
@@ -10,19 +13,18 @@ Uses the [bare git repo technique](https://www.atlassian.com/git/tutorials/dotfi
 | File | Purpose |
 |------|---------|
 | `.zshrc`, `.zprofile`, `.aliases` | Shell config |
-| `.gitconfig` | Global git identity + per-directory includes |
-| `.gitconfig-macrohealth` | MacroHealth git identity + GitLab credential helper |
-| `.ssh/config` | SSH host entries (GitHub, GitLab, local hosts) |
+| `.gitconfig` | Global git config + credential helpers. Identity via `~/.gitconfig.local` (private) |
+| `.ssh/config` | SSH config skeleton. Private hosts via `~/.ssh/config.local` (private) |
 | `.claude/credential-helper.sh` | Claude Code API key helper (1Password-backed, per-directory) |
-| `.claude/api-accounts.json` | Directory → Anthropic account mapping |
-| `.claude/settings.json` | Claude Code global settings |
-| `.claude/statusline-command.sh` | Claude Code status line — model, context %, account (color-coded by org), git branch, dir, session cost |
+| `.claude/statusline-command.sh` | Claude Code status line — model, context %, account (color-coded), git branch, dir, session cost |
+
+Account colors are defined in `~/.claude/statusline-colors.sh` (private overlay) — the script works without it, just without color branding.
 
 ---
 
 ## New machine setup
 
-### 1. Clone
+### 1. Clone public dotfiles
 
 ```sh
 git clone --bare https://github.com/jehanalvani/dotfiles $HOME/.dotfiles
@@ -45,15 +47,21 @@ xargs -I{} sh -c 'mkdir -p ~/.config-backup/$(dirname {}) && mv $HOME/{} ~/.conf
 config checkout
 ```
 
-### 3. Install dependencies
+### 3. Clone private overlay (personal machines only)
+
+```sh
+git clone git@github.com:jehanalvani/dotfiles-private $HOME/.dotfiles-private
+bash ~/.dotfiles-private/install.sh
+```
+
+### 4. Install dependencies
 
 ```sh
 brew install glab
 gh auth setup-git          # GitHub HTTPS credential helper
-glab auth login --hostname gitlab.com  # GitLab auth (pipe PAT from 1Password)
 ```
 
-### 4. Claude Code API key helper
+### 5. Claude Code API key helper
 
 Per-project API keys live in `.claude/auth-keys.json` within each project directory:
 
@@ -64,23 +72,12 @@ Per-project API keys live in `.claude/auth-keys.json` within each project direct
 }
 ```
 
-For directories without a local `auth-keys.json`, the global `~/.claude/api-accounts.json` is used as fallback. An empty `key` falls back to Claude Pro OAuth.
+For directories without a local `auth-keys.json`, the global `~/.claude/api-accounts.json` is used as fallback (provided by the private overlay). An empty `key` falls back to Claude Pro OAuth.
 
 To verify a directory's key resolves correctly:
 
 ```sh
 bash ~/.claude/credential-helper.sh --test
-```
-
-### 5. SSH key for GitLab
-
-Generate a MacroHealth-specific key, store it in 1Password (Employee vault), and add the public key to gitlab.com:
-
-```sh
-ssh-keygen -t ed25519 -C "jehan.alvani@macrohealth.com" -f ~/.ssh/macrohealth_gitlab_ed25519 -N ""
-# Store private key in 1Password, then:
-rm ~/.ssh/macrohealth_gitlab_ed25519
-cat ~/.ssh/macrohealth_gitlab_ed25519.pub | pbcopy  # paste into gitlab.com → Preferences → SSH Keys
 ```
 
 ---

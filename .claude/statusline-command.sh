@@ -71,16 +71,11 @@ if [ -f "$accounts_file" ] && [ -n "$cwd" ]; then
     | if .workspace != "" then .workspace else .name end
   ' "$accounts_file" 2>/dev/null | head -1)
   if [ -n "$account_label" ]; then
-    # ── Account colors ───────────────────────────────────────────
-    # Add/edit entries here. Patterns are fnmatch globs (case-insensitive via lowercase).
-    # 256-color reference: 215=light orange  75=steel blue  default=no color
-    case "${account_label,,}" in
-      *macrohealth*)  color=75  ;;   # steel blue
-      personal)       color=215 ;;   # light orange
-      *little*league*)color=215 ;;   # light orange
-      *)              color=""  ;;
-    esac
-    # ─────────────────────────────────────────────────────────────
+    # Account color lookup — default no-op, overridden by ~/.claude/statusline-colors.sh
+    # Define _account_color() there to return a 256-color code for a given label.
+    _account_color() { echo ""; }
+    [[ -f "$HOME/.claude/statusline-colors.sh" ]] && source "$HOME/.claude/statusline-colors.sh"
+    color=$(_account_color "${account_label,,}")
     if [ -n "$color" ]; then
       account_str=$(printf '\033[38;5;%sm%s\033[0m' "$color" "$account_label")
     else
