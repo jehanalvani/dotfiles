@@ -75,7 +75,7 @@ if [ -f "$accounts_file" ] && [ -n "$cwd" ]; then
     # Define _account_color() there to return a 256-color code for a given label.
     _account_color() { echo ""; }
     [[ -f "$HOME/.claude/statusline-colors.sh" ]] && source "$HOME/.claude/statusline-colors.sh"
-    color=$(_account_color "${account_label,,}")
+    color=$(_account_color "$(tr '[:upper:]' '[:lower:]' <<< "$account_label")")
     if [ -n "$color" ]; then
       account_str=$(printf '\033[38;5;%sm%s\033[0m' "$color" "$account_label")
     else
