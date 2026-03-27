@@ -1,0 +1,50 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ansible kube0:*)",
+      "Bash(ansible-vault view:*)",
+      "Bash(ansible localhost:*)",
+      "Bash(ssh: ansible@kube)",
+      "Bash(ssh:ansible@kube*)",
+      "Bash(ssh: ansible@*)",
+      "Bash(ansible-playbook:*)",
+      "Bash(scp /Users/jehan/Projects/fustercluck_v2/k8s/apps/security/shinobi/values.yml ansible@kube01.local:/home/ansible/k8s/apps/security/shinobi/values.yml)",
+      "Bash(ssh:*)",
+      "Bash(ansible kube01.local -m ansible.posix.synchronize -a \"src=k8s/ dest=/home/ansible/k8s/ delete=yes recursive=yes\" -u ansible)",
+      "Bash(ansible kube01.local -u ansible -m kubernetes.core.helm -a \"name=readarr chart_ref=oci://ghcr.io/bjw-s/helm/app-template chart_version=3.6.1 release_namespace=media state=present values_files=[''''/home/ansible/k8s/apps/media/readarr/values.yml'''']\")",
+      "Bash(curl -s \"https://hub.docker.com/v2/repositories/linuxserver/readarr/tags?page_size=20\")",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); [print\\(t[''''name''''], [img[''''architecture''''] for img in t.get\\(''''images'''',[]\\)]\\) for t in data.get\\(''''results'''',[]\\)]\")",
+      "Bash(ansible kube01.local -m ansible.posix.synchronize -a \"src=k8s/infrastructure/storage/ dest=/home/ansible/k8s/infrastructure/storage/ recursive=yes\" -u ansible)",
+      "Bash(sed -i '' 's/memory: 256Mi/memory: 512Mi/g' /Users/jehan/Projects/fustercluck_v2/k8s/apps/media/prowlarr/values.yml)",
+      "Bash(sed -i '' 's/memory: 512Mi/memory: 1Gi/g' /Users/jehan/Projects/fustercluck_v2/k8s/apps/media/ombi/values.yml)",
+      "Bash(ansible kube0*)",
+      "Bash(sed -i '' '/memory: 1Gi/d' /Users/jehan/Projects/fustercluck_v2/k8s/apps/media/prowlarr/values.yml)",
+      "Bash(sed -i '' '/memory: 2Gi/d' /Users/jehan/Projects/fustercluck_v2/k8s/apps/media/ombi/values.yml)",
+      "Bash(ansible:*)",
+      "Bash(rsync -av -e \"ssh -o StrictHostKeyChecking=no -i ~/.ssh/jehan_personal_id_ecdsa\" /Users/jehan/Projects/fustercluck_v2/k8s/apps/plex/values.yml ansible@10.0.1.30:/home/ansible/k8s/apps/plex/values.yml)",
+      "WebSearch",
+      "Bash(dig plex.alvani.me +short)",
+      "Bash(dig homebridge.alvani.me +short)",
+      "Bash(dig prowlarr.alvani.me +short)",
+      "Bash(dig shinobi.alvani.me +short @10.0.1.250)",
+      "Bash(dig plex.alvani.me +short @10.0.1.250)",
+      "Bash(curl -sk --connect-timeout 5 https://shinobi.alvani.me -o /dev/null -w '%{http_code}')",
+      "Bash(curl -sk --connect-timeout 5 https://plex.alvani.me -o /dev/null -w '%{http_code}')",
+      "Bash(curl -s --digest -u \"admin:admin\" \"http://10.0.1.164/cgi-bin/configManager.cgi?action=getConfig&name=Network\")",
+      "Bash(head -5 curl -s --digest -u \"admin:admin\" \"http://10.0.1.164/cgi-bin/configManager.cgi?action=getConfig&name=Encode\")",
+      "Bash(head -5 curl -s --digest -u \"admin:admin\" \"http://10.0.1.164/cgi-bin/configManager.cgi?action=getConfig&name=General\")",
+      "Bash(curl -s \"http://10.0.1.164/jsCore/common.js\")",
+      "Bash(/usr/bin/curl -sg --digest -u \"admin:REDACTED\" \"http://10.0.1.164/cgi-bin/userManager.cgi?action=getUserInfoAll\")",
+      "WebFetch(domain:amcrest.com)",
+      "WebFetch(domain:support.amcrest.com)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash /Users/jehan/.claude/statusline-command.sh"
+  },
+
+  "effortLevel": "high",
+  "skipDangerousModePermissionPrompt": true
+}

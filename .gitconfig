@@ -1,0 +1,6 @@
+[user]
+  name = Jehan Alvani
+  email = jehan@jehanalvani.com
+
+[includeIf "gitdir:/Users/jehan/Projects/MacroHealth/"]
+  path = ~/.gitconfig-macrohealth

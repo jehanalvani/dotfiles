@@ -1,0 +1,5 @@
+[credential "https://gitlab.com"]
+  helper = /opt/homebrew/bin/glab auth git-credential
+
+[user]
+  email = jehan.alvani@macrohealth.com
