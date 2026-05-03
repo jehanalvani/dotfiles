@@ -1,0 +1,24 @@
+format = "$directory$git_branch$git_status$character"
+
+[directory]
+truncation_length = 1
+truncate_to_repo = false
+style = "fg:#FFAF5F"        # personal orange
+
+[git_branch]
+symbol = "⎇ "
+format = "[ $symbol$branch]($style) "
+style = "fg:#5FAFFF"        # steel blue
+
+[git_status]
+format = "[$all_status]($style) "
+style = "fg:#FF8700"        # burnt orange — same warning color as context meter
+conflicted = "!"
+modified = "*"
+untracked = "?"
+staged = "+"
+deleted = "✘"
+
+[character]
+success_symbol = "[❯](bold fg:#FFAF5F)"
+error_symbol = "[❯](bold red)"
