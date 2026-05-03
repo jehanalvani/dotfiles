@@ -1,3 +1,5 @@
+# ~/.zprofile         
+
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 # (The below instructions are intended for common
@@ -21,3 +23,4 @@ eval "$(pyenv init --path)"
 # for changes to profile files to take effect.
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
