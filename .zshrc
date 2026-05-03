@@ -66,3 +66,28 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Private shell config (work-specific env vars, PATH additions, private tool setup)
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+# Claude Code — per-directory account switching
+# Personal account (~/.claude-personal) is the default.
+# Automatically switches to MacroHealth Enterprise when inside ~/Projects/MacroHealth.
+export CLAUDE_CONFIG_DIR=~/.claude-personal
+
+_claude_config_switch() {
+  if [[ "$PWD" == /Users/jehan/Projects/MacroHealth* ]]; then
+    export CLAUDE_CONFIG_DIR=~/.claude-macrohealth
+  else
+    export CLAUDE_CONFIG_DIR=~/.claude-personal
+  fi
+}
+autoload -U add-zsh-hook
+add-zsh-hook chpwd _claude_config_switch
+_claude_config_switch  # apply on shell start
+
+eval "$(direnv hook zsh)"
+
+codevis() {
+  ANTHROPIC_API_KEY=$(op read "op://HomeLab/codevis Anthropic API Key/credential") \
+    command codevis "$@"
+}
+
+eval "$(register-python-argcomplete codevis)"
